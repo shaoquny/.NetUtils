@@ -40,6 +40,13 @@ public class MultiFilePacker
 		return handle;
 	}
 
+	public bool FileExist(MFPHandle handle, string filename)
+	{
+		FileStream fs = handle.fs;
+		Assert(fs != null, "The MFPHandle has been CLOSED or something WRONG with it");
+		return handle.config.ContainsKey (filename);
+	}
+
 	public void AddFile(MFPHandle handle, string file, string filename)
 	{
 		FileStream fs = handle.fs;
@@ -78,7 +85,7 @@ public class MultiFilePacker
 		FileStream fs = handle.fs;
 		Assert(fs != null, "The MFPHandle has been CLOSED or something WRONG with it");
 		Assert(handle.config.ContainsKey(filename), "The file with name '" + filename + "' does NOT EXISTS");
-		MFPSeek seek = (MFPSeek)handle.config[filename];
+		MFPSeek seek = handle.config[filename];
 		handle.config.Remove(filename);
 		if (seek.tail == handle.seek_pos) {
 			handle.seek_pos = seek.head;
@@ -115,11 +122,17 @@ public class MultiFilePacker
 		FileStream fs = handle.fs;
 		Assert(fs != null, "The MFPHandle has been CLOSED or something WRONG with it");
 		Assert(handle.config.ContainsKey(filename), "The file with name '" + filename + "' does NOT EXISTS");
-		MFPSeek seek = (MFPSeek)handle.config[filename];
+		MFPSeek seek = handle.config[filename];
 		fs.Seek(seek.head, SeekOrigin.Begin);
 		byte[] file_byte = new byte[seek.tail - seek.head];
 		fs.Read(file_byte, 0, file_byte.Length);
 		return System.Text.Encoding.UTF8.GetString(file_byte);
+	}
+
+	public void UpdateFile (MFPHandle handle, string file, string filename)
+	{
+		DeleteFile (handle, filename);
+		AddFile (handle, file, filename);
 	}
 
 	public void Close(MFPHandle handle)
