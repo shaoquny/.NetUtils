@@ -46,8 +46,8 @@ public class MultiFilePacker
 		Assert(fs != null, "The MFPHandle has been CLOSED or something WRONG with it");
 		return handle.config.ContainsKey (filename);
 	}
-
-	public void AddFile(MFPHandle handle, string file, string filename)
+		
+	public void AddFileBytes(MFPHandle handle, byte[] file, string filename)
 	{
 		FileStream fs = handle.fs;
 		Assert(fs != null, "The MFPHandle has been CLOSED or something WRONG with it");
@@ -78,6 +78,12 @@ public class MultiFilePacker
 		};
 		handle.seek_pos = seek.tail;
 		InsertFile(handle, seek, file, filename);
+	}
+
+	public void AddFile(MFPHandle handle, string file, string filename)
+	{
+		byte[] fileBytes = System.Text.Encoding.UTF8.GetBytes(file);
+		AddFileBytes(handle, fileBytes, filename);
 	}
 
 	public void DeleteFile(MFPHandle handle, string filename)
@@ -117,7 +123,7 @@ public class MultiFilePacker
 		space.Add(seek);
 	}
 
-	public string ReadFile(MFPHandle handle, string filename)
+	public byte[] ReadFileBytes(MFPHandle handle, string filename)
 	{
 		FileStream fs = handle.fs;
 		Assert(fs != null, "The MFPHandle has been CLOSED or something WRONG with it");
@@ -126,7 +132,12 @@ public class MultiFilePacker
 		fs.Seek(seek.head, SeekOrigin.Begin);
 		byte[] file_byte = new byte[seek.tail - seek.head];
 		fs.Read(file_byte, 0, file_byte.Length);
-		return System.Text.Encoding.UTF8.GetString(file_byte);
+		return file_byte;
+	}
+
+	public string ReadFile(MFPHandle handle, string filename)
+	{
+		return System.Text.Encoding.UTF8.GetString(ReadFileBytes(handle, filename));
 	}
 
 	public void UpdateFile (MFPHandle handle, string file, string filename)
@@ -189,11 +200,11 @@ public class MultiFilePacker
 		fs.Write (System.Text.Encoding.UTF8.GetBytes (number_string), 0, number_string.Length);
 	}
 
-	private void InsertFile(MFPHandle handle, MFPSeek s, string file, string filename)
+	private void InsertFile(MFPHandle handle, MFPSeek s, byte[] file, string filename)
 	{
 		FileStream fs = handle.fs;
 		fs.Seek(s.head, SeekOrigin.Begin);
-		fs.Write (System.Text.Encoding.UTF8.GetBytes (file), 0, file.Length);
+		fs.Write (file, 0, file.Length);
 		handle.config.Add(filename, s);
 	}
 
