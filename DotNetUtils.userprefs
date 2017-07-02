@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/JsonCSV/JsonCSV.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Utils/FileUtils.cs" Line="14" Column="43" />
+      <File FileName="Assets/Scripts/Utils/DebugUtils.cs" Line="25" Column="1" />
+      <File FileName="Assets/Scripts/JsonCSV/JsonCSV.cs" Line="27" Column="35" />
+      <File FileName="Assets/Editors/JsonCSV/JsonCSVWindow.cs" Line="63" Column="85" />
+      <File FileName="Assets/Editors/MultiFilePacker/MultiFilePackerWindow.cs" Line="42" Column="37" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
