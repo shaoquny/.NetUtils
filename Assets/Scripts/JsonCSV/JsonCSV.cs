@@ -13,7 +13,7 @@ namespace YSQ.NetUtils
 			public static string ERROR_PREFIX = "[-JsonCSV-] Error: ";
 		}
 
-		public static Dictionary<string, Dictionary<string, string>> ToDictionary(string filePath)
+		public static Dictionary<string, Dictionary<string, string>> ToKeyKeyValue(string filePath)
 		{
 			Dictionary<string, Dictionary<string, string>> dictionary = new Dictionary<string, Dictionary<string, string>>();
 			string[] fileLine = File.ReadAllLines(filePath, Encoding.UTF8);
@@ -31,20 +31,35 @@ namespace YSQ.NetUtils
 			return dictionary;
 		}
 
-		public static Dictionary<K1, Dictionary<K2, V>> ToDictionary<K1, K2, V>(string filePath)
+		public static Dictionary<K1, Dictionary<K2, V>> ToKeyKeyValue<K1, K2, V>(string filePath)
 		{
-			string str = JsonConvert.SerializeObject(ToDictionary(filePath));
+			string str = JsonConvert.SerializeObject(ToKeyKeyValue(filePath));
 			return JsonConvert.DeserializeObject<Dictionary<K1, Dictionary<K2, V>>>(str);
 		}
 
-		public static Dictionary<T1, Dictionary<T2, T3>> ToJson<T1, T2, T3>(string filePath, TypeSwitch typeSwitch)
+		public static Dictionary<string, List<string>> ToKeyValueList(string filePath)
 		{
-			string[] fileData = File.ReadAllLines(filePath, Encoding.UTF8);
-			string[] keys = fileData[0].Split(',');
-			Dictionary<T1, Dictionary<T2, T3>> dict = new Dictionary<T1, Dictionary<T2, T3>>();
+			Dictionary<string, List<string>> dictionary = new Dictionary<string, List<string>>();
+			string[] fileLine = File.ReadAllLines(filePath, Encoding.UTF8);
+			string[] keys = fileLine[0].Split(',');
+			for (int line = 1; line < fileLine.Length; line++) {
+				string[] data = fileLine[line].Split(',');
+				for (int index = 0; index < data.Length; index++) {
+					if (!dictionary.ContainsKey(keys[index])) {
+						dictionary.Add(keys[index], new List<string>());
+					}
+					dictionary[keys[index]].Add(data[index]);
+				}
+			}
+			string str = JsonConvert.SerializeObject(dictionary);
+			DebugUtils.Log(str);
+			return dictionary;
+		}
 
-//			while()
-			return null;
+		public static Dictionary<K, List<V>> ToKeyValueList<K, V>(string filePath)
+		{
+			string str = JsonConvert.SerializeObject(ToKeyValueList(filePath));
+			return JsonConvert.DeserializeObject<Dictionary<K, List<V>>>(str);
 		}
 
 		[System.Diagnostics.Conditional("DEBUG")]

@@ -16,7 +16,7 @@ public class MultiFilePackerWindow : EditorWindow
 	List<string> excludeExtension = new List<string>();
 	List<SearchOption> searchOption = new List<SearchOption>();
 	bool optionalSetting;
-	bool compress = true;
+//	bool compress = true;
 	string encryptKey;
 	float useTime;
 
@@ -69,7 +69,7 @@ public class MultiFilePackerWindow : EditorWindow
 		}
 
 		optionalSetting = EditorGUILayout.BeginToggleGroup("Optional Settings", optionalSetting);
-		compress = EditorGUILayout.Toggle("Compress", optionalSetting);
+//		compress = EditorGUILayout.Toggle("Compress", optionalSetting);
 		encryptKey = EditorGUILayout.TextField("Encrypt Key", encryptKey);
 		EditorGUILayout.EndToggleGroup();
 

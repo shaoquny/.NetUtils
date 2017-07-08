@@ -23,8 +23,8 @@ public class JsonCSVWindow : EditorWindow
 	string csvPath;
 	Dictionary<string, Dictionary<string, string>> dictionary;
 	Dictionary<MsgType, Dictionary<LanguageType, string>> typeDict;
-	string Key1;
-	string Key2;
+	MsgType Key1;
+	LanguageType Key2;
 	string Value;
 
 	float useTime;
@@ -44,23 +44,26 @@ public class JsonCSVWindow : EditorWindow
 			csvPath = Application.dataPath + csvPath;
 		}
 
-		csvPath = EditorGUILayout.TextField("CSV File Path", csvPath);
+		GUILayout.BeginHorizontal();
+		csvPath = Application.dataPath + EditorGUILayout.TextField("CSV File Path", csvPath.Replace(Application.dataPath, ""));
+		if (GUILayout.Button("Select", GUILayout.Width(80))) {
+			csvPath = EditorUtility.OpenFilePanel("Select", Application.dataPath, "csv");
+		}
+		GUILayout.EndHorizontal();
 
-		Key1 = EditorGUILayout.TextField("Key 1", Key1);
-		Key2 = EditorGUILayout.TextField("Key 2", Key2);
+		GUILayout.BeginHorizontal();
+		Key1 = (MsgType)EditorGUILayout.EnumPopup("Key 1", Key1);
+		Key2 = (LanguageType)EditorGUILayout.EnumPopup("Key 2", Key2);
+		GUILayout.EndHorizontal();
 		Value = EditorGUILayout.TextField("Value", Value);
 
 		if (GUILayout.Button("Parse")) {
 			Stopwatch clock = new Stopwatch();
 			clock.Start();
-//			if (dictionary == null) {
-//				dictionary = JsonCSV.ToDictionary(csvPath);
-//			}
-//			Value = dictionary[Key1][Key2];
 			if (typeDict == null) {
-				typeDict = JsonCSV.ToDictionary<MsgType, LanguageType, string>(csvPath);
+				typeDict = JsonCSV.ToKeyKeyValue<MsgType, LanguageType, string>(csvPath);
 			}
-			Value = typeDict[(MsgType)System.Enum.Parse(typeof(MsgType), Key1)][(LanguageType)System.Enum.Parse(typeof(LanguageType), Key2)];
+			Value = typeDict[Key1][Key2];
 			clock.Stop();
 			useTime = (float)clock.Elapsed.TotalSeconds;
 		}
