@@ -30,7 +30,7 @@ public class JsonCSVWindow : EditorWindow
 	float useTime;
 
 	[MenuItem(".NetUtils/JsonCSV")]
-	static void MultiFilePacker()
+	static void JsonCSVWin()
 	{
 		// Get existing open window or if none, make a new one:
 		EditorWindow window = EditorWindow.GetWindow(typeof(JsonCSVWindow));

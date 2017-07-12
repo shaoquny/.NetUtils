@@ -47,9 +47,14 @@
   <ItemGroup>
      <Compile Include="Assets\Editors\JsonCSV\JsonCSVWindow.cs" />
      <Compile Include="Assets\Editors\MultiFilePacker\MultiFilePackerWindow.cs" />
+     <Compile Include="Assets\Editors\SpriteProxy\SpriteAssetsPostprocessor.cs" />
+     <Compile Include="Assets\Editors\SpriteProxy\SpriteProxyWindow.cs" />
      <Compile Include="Assets\Scripts\JsonCSV\JsonCSV.cs" />
+     <Compile Include="Assets\Scripts\Manager\ResourceManager.cs" />
      <Compile Include="Assets\Scripts\MultiFilePacker\MultiFilePacker.cs" />
      <Compile Include="Assets\Scripts\MultiFilePacker\MultiFilePackerSample.cs" />
+     <Compile Include="Assets\Scripts\SpriteProxy\SpriteProxy.cs" />
+     <Compile Include="Assets\Scripts\SpriteProxy\SpriteProxyManager.cs" />
      <Compile Include="Assets\Scripts\Utils\DebugUtils.cs" />
      <Compile Include="Assets\Scripts\Utils\FileUtils.cs" />
  <Reference Include="UnityEngine.Networking">

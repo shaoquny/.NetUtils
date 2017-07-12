@@ -21,7 +21,7 @@ public class MultiFilePackerWindow : EditorWindow
 	float useTime;
 
 	[MenuItem(".NetUtils/MultiFilePacker")]
-	static void MultiFilePacker()
+	static void MultiFilePackerWin()
 	{
 		// Get existing open window or if none, make a new one:
 		MultiFilePackerWindow window = (MultiFilePackerWindow)EditorWindow.GetWindow(typeof(MultiFilePackerWindow));
