@@ -9,3 +9,7 @@
   
 * #### JsonCSV
   * Read csv file and convert to json type data
+  
+* #### SpriteProxy
+  * Automatically pack sprite in specified folder
+  * Make it possible to load sprite in runtime
